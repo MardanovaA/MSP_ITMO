@@ -1,5 +1,2 @@
-build.properties
 build.xml
-build/Lab3.jar
-src/TestT.java
 		
