@@ -1,6 +1,6 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
-public class Test {
+public class TestT {
     private static Point zero = new Point(0.0, 0.0, 0.0);
     private static Point p_1 = new Point(0.0, 0.0, 2.0);
     private static Point p_2 = new Point(0.0, 0.0, 1.0);
@@ -13,6 +13,8 @@ public class Test {
     public void testSecondAreaMiss() {
         assertFalse(p_4.isInArea());
     }
+	
+	
 	
     @Test
     public void testThirdAreaHit() {

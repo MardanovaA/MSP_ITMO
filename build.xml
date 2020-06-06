@@ -6,6 +6,17 @@
 		</classpath>
 	</taskdef>
 	
+	<scriptdef name="compare" language="javascript">
+     <attribute name="lhs" />
+     <attribute name="rhs" />
+     <attribute name="property" />
+     <![CDATA[
+       var lhs = attributes.get("lhs");
+       var rhs = attributes.get("rhs");
+       project.setProperty(attributes.get("property"), lhs == rhs);
+     ]]>
+</scriptdef>
+	
 	<!--<taskdef name="helloworld" classname="TestTask" classpath="./"/>-->
 	
 	<loadproperties srcFile="build.properties"/>
@@ -22,7 +33,7 @@
          <delete dir="${build}"/>
      </target>
 	 
-	<target name="package" depends="compile">
+	<target name="build" depends="compile">
 		<jar destfile="${build}/${ant.project.name}.jar" basedir="${classes}" excludes="TestT.class">
 			<manifest>
 				<attribute name="Main–Class" value="${ant.project.name}"/>
@@ -45,22 +56,16 @@
 <target name="diff" description="commits changes in classes">
 		
 		<exec executable="git" outputproperty="git_diff_result"> 
-			<arg value="diff"/>
+			<arg value="ls-files"/> <arg value="-m"/>
 		</exec>
 		<property name="founddiff" value="yes" />
 		<ac:for list="${difflist}" param="file">
 			<sequential>
-			
-				<ac:if> 
-					<matches pattern="@{file}" string="${git_diff_result}"/>
-					
-				
-				<ac:then>
-					<property name="founddiff" value="no" />
-					<echo message="TRUE"/>
-				</ac:then>
-				</ac:if>
-				
+			<echo message="Looking whether @{file} has changed"/>
+			 <compare lhs="${git_diff_result}" rhs="${git_diff_result}" property="result"/>
+				<echo message="${result}"/>
+				<echo message="@{file}"/>				
+				<echo message="${git_diff_result}"/>				
 					
 			</sequential>
 		</ac:for>

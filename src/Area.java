@@ -36,7 +36,7 @@ public class Area {
     }
     // lol ub (actually upper bound)
     private static boolean inInterval(double val, double lb, double ub) {
-        if (val >= lb && val <= ub) {
+        if (val >= lb && val < ub) {
             return true;
         }
         else {
