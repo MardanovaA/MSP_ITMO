@@ -1,27 +1,27 @@
 <?xml version="1.0"?>
- <project name="Lab3" default="compile" basedir="." xmlns:ac="antlib:net.sf.antcontrib">
+
+<project name="Lab3" default="compile" basedir="." xmlns:ac="antlib:net.sf.antcontrib">
 		<taskdef resource="net/sf/antcontrib/antlib.xml"  uri="antlib:net.sf.antcontrib">
 		<classpath>
-			<fileset dir="./lib/ant-contrib"/>
+			<fileset dir="../lib/ant-contrib"/>
 		</classpath>
 	</taskdef>
 	
 	<scriptdef name="compare" language="javascript">
-     <attribute name="lhs" />
-     <attribute name="rhs" />
-     <attribute name="property" />
-     <![CDATA[
-       var lhs = attributes.get("lhs");
-       var rhs = attributes.get("rhs");
-       project.setProperty(attributes.get("property"), lhs != rhs);
-     ]]>
-</scriptdef>
-	
-	<!--<taskdef name="helloworld" classname="TestTask" classpath="./"/>-->
-	
-	<loadproperties srcFile="build.properties"/>
+		 <attribute name="lhs" />
+		 <attribute name="rhs" />
+		 <attribute name="property" />
+		 <![CDATA[
+		   var lhs = attributes.get("lhs");
+		   var rhs = attributes.get("rhs");
+		   project.setProperty(attributes.get("property"), lhs != rhs);
+		 ]]>
+	</scriptdef>
+		
+	<loadproperties srcFile="../build.properties"/>
 	<property name="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}"/>
 	
+	<!-- TASK 1 -->
     <target name="compile">
          <mkdir dir="${classes}"/>
          <javac srcdir="${src}" destdir="${classes}" includeAntRuntime="false">
@@ -29,10 +29,7 @@
 		 </javac>
      </target>
 
-     <target name="clean">
-         <delete dir="${build}"/>
-     </target>
-	 
+	 <!-- TASK 2 -->
 	<target name="build" depends="compile">
 		<jar destfile="${build}/${ant.project.name}.jar" basedir="${classes}">
 			<manifest>
@@ -41,6 +38,12 @@
 		</jar>
 	</target>
 
+	<!-- TASK 3 -->
+	<target name="clean">
+         <delete dir="${build}"/>
+     </target>
+	 
+	<!-- TASK 4 -->
 	<target name="test" depends="compile" >
 		<junit fork="yes">
 		<classpath>
@@ -53,29 +56,45 @@
 		</junit>
 	</target>
 	
-<target name="diff" description="commits changes in classes">
-		
+	<!-- TASK 6 -->
+	<target name="diff">
 		<exec executable="git" outputproperty="git_diff_result"> 
 			<arg value="ls-files"/> <arg value="-m"/>
-		</exec> 		
-		<echo file="kostil.properties" message="${git_diff_result}" append="false">
+		</exec> 
+		<echo file="kostil.txt" message="${git_diff_result}" append="false">
 		</echo>
-		<loadproperties list="kostil.properties"/>
+		<loadfile property="fileKostil" srcfile="kostil.txt"/>
 		
-		<property name="founddiff" value="yes" />
 		<ac:for list="${difflist}" param="file">
 			<sequential>
 			<echo message="Looking whether @{file} has changed"/>
-			 <compare lhs="${git_diff_result}" rhs="@{file}" property="result"/>
-				<echo message="@{file}"/>				
-				<echo message="${git_diff_result}"/>				
-				<echo message="${result}"/>
+			<ac:for param="line" list="${fileKostil}" delimiter="${line.separator}">
+				<sequential>
+						<compare lhs="@{line}" rhs="@{file}" property="result"/>
+						<ac:if>
+							<equals arg1="${result}" arg2="true" />
+							<ac:then>
+								<echo message="!!!"/>
+								<echo message="@{file}"/>
+								<property name="n" value="false" />
+							</ac:then>
+						</ac:if>
+				</sequential>
+			</ac:for>
 			</sequential>
-		</ac:for>
-		<fail message="Files are not changed." />
-		<antcall target="diffcommit" />
-	</target>
-	<target name="diffcommit" if="${result}">
+		</ac:for>		
+		<ac:if>
+			<equals arg1="${n}" arg2="false" />
+		<ac:then>
+			<fail message="Files are not changed."/>
+		</ac:then>
+		<ac:else>
+			<antcall target="diffcommit" />
+		</ac:else>
+		</ac:if>		
+	</target>	
+	
+	<target name="diffcommit">
 	<echo>Commiting...</echo>
 	<exec executable="git">  
 		<arg value="add"/>
