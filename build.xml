@@ -51,6 +51,7 @@
 		<exec executable="git" outputproperty="git_diff_result"> 
 			<arg value="diff"/>
 		</exec>
+		<property name="founddiff" value="no" />
 		<ac:for list="${difflist}" param="file" keepgoing="true">
 			<sequential>
 				<echo message="Looking whether @{file} has changed"/>
