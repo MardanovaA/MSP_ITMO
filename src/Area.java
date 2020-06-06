@@ -17,6 +17,10 @@ public class Area {
             return false;
         }
     }
+	
+	
+	
+	
     // y = x/2 + r/2
     private boolean secondSegment(double x, double y) {
         if (inInterval(x, -r, 0.0) && inInterval(y, -0.5*x-0.5*r, 0.0)) {
