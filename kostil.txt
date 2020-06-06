@@ -1,6 +1,9 @@
-src/Area.class
-src/Lab3.class
-src/Point.class
-src/TestT.class
-src/log.txt
+build.properties
+build.properties.txt
+config/build.properties.txt
+example.txt
+new.xml
+src/build.xml
+src/hamcrest-core-1.3.jar
+src/junit-4.12.jar
 		
