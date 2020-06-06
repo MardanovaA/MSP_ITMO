@@ -6,11 +6,11 @@ public class Area {
     public boolean isInArea(double x, double y) {
         return firstSegment(x, y) || secondSegment(x, y) || thirdSegment(x, y);
     }
-    // x^2 + y^2 = r^2
+    // x^2 + y^2 = r
 
 
     private boolean firstSegment(double x, double y) {
-        if (inInterval(x, 0.0, r) && inInterval(y, 0.0, Math.sqrt(r*r - x*x))) {
+        if (inInterval(x, 0.0, r) && inInterval(y, 0.0, Math.sqrt(r - x*x))) {
             return true;
         }
         else {
