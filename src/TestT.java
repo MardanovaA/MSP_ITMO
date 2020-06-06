@@ -14,12 +14,7 @@ public class Test {
         assertFalse(p_4.isInArea());
     }
 	
-	@Test
-    public void testSecondAreaMiss2() {
-        assertFalse(p_4.isInArea());
-    }
-	
-	
+
 	
 
     @Test
