@@ -1,4 +1,0 @@
-src=src
-build=build
-classes=build/classes
-classnames=Area, Lab3
