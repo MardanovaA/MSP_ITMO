@@ -17,6 +17,10 @@ public class Test {
 
 	
 
+
+
+
+
     @Test
     public void testThirdAreaHit() {
         assertTrue(p_5.isInArea());
