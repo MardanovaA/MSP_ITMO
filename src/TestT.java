@@ -14,15 +14,6 @@ public class Test {
         assertFalse(p_4.isInArea());
     }
 	
-
-
-
-	
-
-
-
-
-
     @Test
     public void testThirdAreaHit() {
         assertTrue(p_5.isInArea());
