@@ -15,10 +15,6 @@ public class Point {
         return area;
     }
 	
-	
-	
-	
-
     public boolean isInArea(){
         return area.isInArea(x,y);
     }

@@ -12,9 +12,7 @@ public class TestT {
     @Test
     public void testSecondAreaMiss() {
         assertFalse(p_4.isInArea());
-    }
-	
-	
+    }	
 	
     @Test
     public void testThirdAreaHit() {
@@ -26,7 +24,7 @@ public class TestT {
     }
     @Test
     public void testFirstAreaMiss() {
-        assertTrue(p_2.isInArea());
+        assertFalse(p_2.isInArea());
     }
     @Test
     public void testSecondAreaHit() {
@@ -34,7 +32,7 @@ public class TestT {
     }
     @Test
     public void testThirdAreaMiss() {
-        assertTrue(p_6.isInArea());
+        assertFalse(p_6.isInArea());
     }
     @Test
     public void testZero() {
@@ -42,27 +40,83 @@ public class TestT {
     }
 
 
-    @Test
-    public void test1() {
-        assertTrue(new Point(1.0, 2.0, 3.0).isInArea());
-    }
+   @Test
+   public void InFirstArea1() {
+       assertTrue(new Point(4.0, 0.0, 5.0).isInArea());
+   }
 
-    @Test
-    public void test2() {
-        assertTrue(new Point(-2.0, -1.0, 5.0).isInArea());
-    }
-	
-	
+@Test
+   public void InFirstArea2() {
+       assertTrue(new Point(0.0, 3.0, 5.0).isInArea());
+   }
 
-    @Test
-    public void test3() {
-        assertFalse(new Point(3.0, -2.0, 4.0).isInArea());
-    }
 
-    @Test
-    public void test4() {
-        assertFalse(new Point(-5.0, -12.0, 5.0).isInArea());
-    }
+@Test
+   public void InFirstArea3() {
+       assertFalse(new Point(7.0, 0.0, 5.0).isInArea());
+   }
+
+
+
+   @Test
+   public void notInSecondArea1() {
+       assertFalse(new Point(1.0, -2.0, 2.0).isInArea());
+   }
+
+   @Test
+   public void notInThirdArea1() {
+       assertTrue(new Point(1.0, -2.0, 3.0).isInArea());
+   }
+
+
+
+   @Test
+   public void InSecondArea4() {
+       assertTrue(new Point(1.0, -2.0, 3.0).isInArea());
+   }
+
+
+   @Test
+   public void InThirdArea5() {
+       assertFalse(new Point(-4.0,0.0, 5.0).isInArea());
+   }
+
+  @Test
+   public void InThirdArea6() {
+       assertFalse(new Point(-4.1,0.0, 5.2).isInArea());
+   }
+
+
+
+  @Test
+   public void InSecondArea7() {
+       assertTrue(new Point(0.0, -5.0, 5.0).isInArea());
+   }
+ @Test
+   public void notInSecondArea8() {
+       assertFalse(new Point(2.5, -5.0, 5.0).isInArea());
+   }
+
+
+   @Test
+   public void notInThirdArea9() {
+       assertFalse(new Point(-1.0, 2.0, 3.0).isInArea());
+   }
+
+@Test
+   public void InFirstArea10() {
+       assertTrue(new Point(5.0, 0.0, 5.1).isInArea());
+   }
+
+@Test
+   public void InFirstArea11() {
+       assertFalse(new Point(1.0,1.0,1.1).isInArea());
+   }
+  @Test
+   public void NotInThirdArea12() {
+       assertFalse(new Point(-4.3,0.0, 5.0).isInArea());
+   }
+
 
 
     @Test(expected=IllegalArgumentException.class)
