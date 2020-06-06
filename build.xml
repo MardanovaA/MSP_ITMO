@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
- <project name="Lab3" default="compile">
-	<property file="build.properties"/>
-
-
+ <project name="Lab3" default="compile"  basedir="." xmlns:ac="antlib:net.sf.antcontrib">
+	<loadproperties srcFile="build.properties"/>
+	<property name="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}"/>
+	
 	<taskdef resource="net/sf/antcontrib/antlib.xml" uri="antlib:net.sf.antcontrib">
-			<classpath>
-				<fileset dir="./lib/ant-contrib"/>
-			</classpath>
-		</taskdef>
-
+		<classpath>
+			<fileset dir="./lib/ant-contrib"/>
+		</classpath>
+	</taskdef>
+	
 
 
 
@@ -45,24 +45,24 @@
 		</junit>
 	</target>
 	
+	
+	
 <target name="diff" description="commits changes in classes">
-		<mkdir dir="src"><mkdir>
 		<exec executable="git" outputproperty="git_diff_result"> 
 			<arg value="diff"/>
 		</exec>
-		<echo message="${classnames}"/>
-		<ac:for list="${classnames}" param="file" keepgoing="true">
+		<ac:for list="${difflist}" param="file" keepgoing="true">
 			<sequential>
 				<echo message="Looking whether @{file} has changed"/>
 				<condition property="foundindifflog">
-					<not>
-						<matches pattern="@{file}" string="${git_diff_result}"/>
-					</not>
+				<not>
+					<matches pattern="@{file}" string="${git_diff_result}"/>
+				</not>
 				</condition>
 				<property name="founddiff" value="yes" />
 			</sequential>
 		</ac:for>
-		<fail message="Files are not changed2." unless="foundindifflog"/>
+		<fail message="Files are not changed." unless="foundindifflog"/>
 		<antcall target="diffcommit" />
 	</target>
 	<target name="diffcommit" if="${foundindifflog}">
@@ -76,7 +76,7 @@
 		<arg value="-m 'ant diff auto commit on version ${build.number}'"/>
 	</exec>
 	</target>
-
+	
 
 	
 
