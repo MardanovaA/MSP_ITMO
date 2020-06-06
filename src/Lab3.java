@@ -11,10 +11,6 @@ public class Lab3 {
 
 
 
-
-
-
-
         Point point = new Point(x, y, r);
         Area area = point.getArea();
 

@@ -51,6 +51,8 @@ public class TestT {
     public void test2() {
         assertTrue(new Point(-2.0, -1.0, 5.0).isInArea());
     }
+	
+	
 
     @Test
     public void test3() {
