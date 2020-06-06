@@ -71,6 +71,9 @@
 			<ac:for param="line" list="${fileKostil}" delimiter="${line.separator}">
 				<sequential>
 						<compare lhs="@{line}" rhs="@{file}" property="result"/>
+								<echo message="@{file}"/>
+								<echo message="@{result}"/>
+								<echo message="--------------"/>
 						<ac:if>
 							<equals arg1="${result}" arg2="true" />
 							<ac:then>

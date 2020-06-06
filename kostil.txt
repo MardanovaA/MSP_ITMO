@@ -1,2 +1,6 @@
-build.xml
+src/Area.class
+src/Lab3.class
+src/Point.class
+src/TestT.class
+src/log.txt
 		
