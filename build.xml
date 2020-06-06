@@ -1,78 +1,69 @@
-<?xml version="1.0"?>
- <project name="Lab3" default="compile" basedir="." xmlns:ac="antlib:net.sf.antcontrib">
-		<taskdef resource="net/sf/antcontrib/antlib.xml"  uri="antlib:net.sf.antcontrib">
+
+<project name="test" default="test"  xmlns:ac="antlib:net.sf.antcontrib">
+<taskdef resource="net/sf/antcontrib/antlib.xml"  uri="antlib:net.sf.antcontrib">
 		<classpath>
 			<fileset dir="./lib/ant-contrib"/>
 		</classpath>
-	</taskdef>
-	
-	<scriptdef name="compare" language="javascript">
+</taskdef>
+<scriptdef name="compare" language="javascript">
      <attribute name="lhs" />
      <attribute name="rhs" />
      <attribute name="property" />
      <![CDATA[
        var lhs = attributes.get("lhs");
        var rhs = attributes.get("rhs");
-       project.setProperty(attributes.get("property"), lhs == rhs);
+	   project.setProperty(attributes.get("property"), lhs.indexOf(rhs) > -1);
      ]]>
 </scriptdef>
-	
-	<!--<taskdef name="helloworld" classname="TestTask" classpath="./"/>-->
-	
-	<loadproperties srcFile="build.properties"/>
-	<property name="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}"/>
-	
-     <target name="compile">
-         <mkdir dir="${classes}"/>
-         <javac srcdir="${src}" destdir="${classes}" includeAntRuntime="false">
-		 <classpath location="lib/junit-4.12.jar"/>
-		 </javac>
-     </target>
 
-     <target name="clean">
-         <delete dir="${build}"/>
-     </target>
-	 
-	<target name="build" depends="compile">
-		<jar destfile="${build}/${ant.project.name}.jar" basedir="${classes}" excludes="TestT.class">
-			<manifest>
-				<attribute name="Main–Class" value="${ant.project.name}"/>
-			</manifest>
-		</jar>
-	</target>
+<loadproperties srcFile="build.properties"/>
 
-	<target name="test" depends="compile" >
-		<junit fork="yes">
-		<classpath>
-			<pathelement location="src"/>
-			<pathelement location="src/junit-4.12.jar" />
-			<pathelement location="src/hamcrest-core-1.3.jar" />
-		</classpath>
-		<formatter type="plain" usefile="false" />
-			<test name = "TestT"/>
-		</junit>
-	</target>
+<target name="test">
 	
-<target name="diff" description="commits changes in classes">
-		
+
 		<exec executable="git" outputproperty="git_diff_result"> 
 			<arg value="ls-files"/> <arg value="-m"/>
-		</exec>
-		<property name="founddiff" value="yes" />
+		</exec> 
+		<echo file="kostil.txt" message="${git_diff_result}" append="false">
+		</echo>
+		<loadfile property="fileKostil" srcfile="kostil.txt"/>
+		
 		<ac:for list="${difflist}" param="file">
 			<sequential>
 			<echo message="Looking whether @{file} has changed"/>
-			 <compare lhs="${git_diff_result}" rhs="${git_diff_result}" property="result"/>
-				<echo message="${result}"/>
-				<echo message="@{file}"/>				
-				<echo message="${git_diff_result}"/>				
-					
+			<ac:for param="line" list="${fileKostil}" delimiter="${line.separator}">
+						  <sequential>
+									<compare lhs="@{line}" rhs="@{file}" property="result"/>
+									<!-- <echo message="@{line}"/> -->
+									<!-- <echo message="@{file}"/> -->
+									
+									<echo message="result:"/>				
+									<echo message="${result}"/>
+									<echo message="---------------------"/>
+									<ac:if>
+										<equals arg1="${result}" arg2="true" />
+									<ac:then>
+										<property name="n" value="false" />
+										<echo message="NOOOOOOOOOOOO"/>
+									</ac:then>
+									</ac:if>
+						  </sequential>
+					</ac:for>
 			</sequential>
 		</ac:for>
-		<fail message="Files are not changed." />
-		<antcall target="diffcommit" />
+		<ac:if>
+			<equals arg1="${n}" arg2="false" />
+		<ac:then>
+			<fail message="Files are not changed."/>
+		</ac:then>
+		<ac:else>
+			<antcall target="diffcommit" />
+		</ac:else>
+		</ac:if>		
 	</target>
-	<target name="diffcommit" if="${foundindiff}">
+	
+	
+	<target name="diffcommit">
 	<echo>Commiting...</echo>
 	<exec executable="git">  
 		<arg value="add"/>
@@ -83,9 +74,5 @@
 		<arg value="-m 'ant diff auto commit on version ${build.number}'"/>
 	</exec>
 	</target>
-
-
 	
-
-
- </project>
+</project>
