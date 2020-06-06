@@ -1,0 +1,4 @@
+src=src
+build=build
+classes=build/classes
+classnames=Area.java,Lab3.java
