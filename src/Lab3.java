@@ -11,9 +11,6 @@ public class Lab3 {
 			System.out.println("Enter the radius");
 			double r = in.nextDouble();
 
-
-
-
 			Point point = new Point(x, y, r);
 			//Area area = point.getArea();
 
