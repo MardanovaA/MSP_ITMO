@@ -1,5 +1,6 @@
 import java.util.Scanner;
 public class Lab3 {
+	
     public static void main(String[] args) {
 		while (true){
 			Scanner in = new Scanner(System.in);
@@ -9,6 +10,9 @@ public class Lab3 {
 			double y = in.nextDouble();
 			System.out.println("Enter the radius");
 			double r = in.nextDouble();
+
+
+
 
 			Point point = new Point(x, y, r);
 			//Area area = point.getArea();
