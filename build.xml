@@ -60,7 +60,7 @@
 					<matches pattern="@{file}" string="${git_diff_result}"/>
 				</not>
 				</condition>
-				<property name="founddiff" value="yes" />
+				
 			</sequential>
 		</ac:for>
 		<fail message="Files are not changed." unless="foundindifflog"/>
