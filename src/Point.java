@@ -16,6 +16,8 @@ public class Point {
     }
 	
 	
+	
+	
 
     public boolean isInArea(){
         return area.isInArea(x,y);
