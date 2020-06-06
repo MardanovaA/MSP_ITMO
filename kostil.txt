@@ -1,9 +1,16 @@
 build.properties
-build.properties.txt
-config/build.properties.txt
-example.txt
-new.xml
+build.xml
+build/classes/Lab3.class
+build/classes/Point.class
+kostil.txt
+src/1/Area.class
+src/1/Lab3.class
+src/1/Point.class
+src/1/TestT.class
+src/1/example.txt
+src/1/hamcrest-core-1.3.jar
+src/1/junit-4.12.jar
+src/1/log.txt
+src/1/new.xml
 src/build.xml
-src/hamcrest-core-1.3.jar
-src/junit-4.12.jar
 		
