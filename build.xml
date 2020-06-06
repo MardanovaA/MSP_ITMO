@@ -13,7 +13,7 @@
 		 <![CDATA[
 		   var lhs = attributes.get("lhs");
 		   var rhs = attributes.get("rhs");
-		   project.setProperty(attributes.get("property"), lhs != rhs);
+		   project.setProperty(attributes.get("property"), lhs.indexOf(rhs) > -1);
 		 ]]>
 	</scriptdef>
 		
@@ -70,6 +70,7 @@
 			<ac:for param="line" list="${fileKostil}" delimiter="${line.separator}">
 				<sequential>
 						<compare lhs="@{line}" rhs="@{file}" property="result"/>
+						<echo message="${result}"/>
 						<ac:if>
 							<equals arg1="${result}" arg2="true" />
 							<ac:then>

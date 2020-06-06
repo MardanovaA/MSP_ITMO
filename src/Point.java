@@ -21,3 +21,6 @@ public class Point {
         return area.isInArea(x,y);
     }
 }
+
+
+
