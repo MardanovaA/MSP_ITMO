@@ -10,14 +10,6 @@ public class Lab3 {
         double r = in.nextDouble();
 
 
-
-
-
-
-
-
-
-
         Point point = new Point(x, y, r);
         Area area = point.getArea();
 

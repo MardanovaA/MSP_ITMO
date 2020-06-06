@@ -1,19 +1,16 @@
 <?xml version="1.0"?>
- <project name="Lab3" default="compile"  basedir="." xmlns:ac="antlib:net.sf.antcontrib">
-	<loadproperties srcFile="build.properties"/>
-	<property name="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}"/>
-	
-	<taskdef resource="net/sf/antcontrib/antlib.xml" uri="antlib:net.sf.antcontrib">
+ <project name="Lab3" default="compile" basedir="." xmlns:ac="antlib:net.sf.antcontrib">
+		<taskdef resource="net/sf/antcontrib/antlib.xml"  uri="antlib:net.sf.antcontrib">
 		<classpath>
 			<fileset dir="./lib/ant-contrib"/>
 		</classpath>
 	</taskdef>
 	
-
-
-
-
-
+	<!--<taskdef name="helloworld" classname="TestTask" classpath="./"/>-->
+	
+	<loadproperties srcFile="build.properties"/>
+	<property name="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}"/>
+	
      <target name="compile">
          <mkdir dir="${classes}"/>
          <javac srcdir="${src}" destdir="${classes}" includeAntRuntime="false">
@@ -45,22 +42,23 @@
 		</junit>
 	</target>
 	
-	
-	
 <target name="diff" description="commits changes in classes">
+		
 		<exec executable="git" outputproperty="git_diff_result"> 
 			<arg value="diff"/>
 		</exec>
-		<property name="founddiff" value="no" />
-		<ac:for list="${difflist}" param="file" keepgoing="true">
+		<property name="founddiff" value="yes" />
+		<ac:for list="${difflist}" param="file">
 			<sequential>
 				<echo message="Looking whether @{file} has changed"/>
-				<condition property="foundindifflog">
-				<not>
-					<matches pattern="@{file}" string="${git_diff_result}"/>
-				</not>
-				</condition>
-				
+
+				<ac:if> 
+					<equals arg1="@{file}" arg2="${git_diff_result}" />
+				<ac:then>
+					<property name="founddiff" value="no" />
+				</ac:then>
+				</ac:if>
+					
 			</sequential>
 		</ac:for>
 		<fail message="Files are not changed." unless="foundindifflog"/>
@@ -77,7 +75,7 @@
 		<arg value="-m 'ant diff auto commit on version ${build.number}'"/>
 	</exec>
 	</target>
-	
+
 
 	
 
