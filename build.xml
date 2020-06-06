@@ -50,21 +50,24 @@
 		<property name="founddiff" value="yes" />
 		<ac:for list="${difflist}" param="file">
 			<sequential>
-				<echo message="Looking whether @{file} has changed"/>
-
+			
 				<ac:if> 
-					<equals arg1="@{file}" arg2="${git_diff_result}" />
+					<matches pattern="@{file}" string="${git_diff_result}"/>
+					
+				
 				<ac:then>
 					<property name="founddiff" value="no" />
+					<echo message="TRUE"/>
 				</ac:then>
 				</ac:if>
+				
 					
 			</sequential>
 		</ac:for>
-		<fail message="Files are not changed." unless="foundindifflog"/>
+		<fail message="Files are not changed." />
 		<antcall target="diffcommit" />
 	</target>
-	<target name="diffcommit" if="${foundindifflog}">
+	<target name="diffcommit" if="${foundindiff}">
 	<echo>Commiting...</echo>
 	<exec executable="git">  
 		<arg value="add"/>
