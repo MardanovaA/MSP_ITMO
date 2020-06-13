@@ -6,7 +6,7 @@ public class Lab3 {
 			Scanner in = new Scanner(System.in);
 			System.out.println("Enter the x coordinate");
 			double x = in.nextDouble();
-			System.out.println("Введите координату y");
+			System.out.println("??????? ?????????? y");
 			double y = in.nextDouble();
 			System.out.println("Enter the radius");
 			double r = in.nextDouble();

@@ -57,6 +57,11 @@
 		</junit>
 	</target>
 	
+	<!-- TASK 5 -->
+	<target name="native2ascii">
+		<native2ascii src="dest" dest="dest1" encoding="ASCII" reverse="true" />
+	</target>
+	
 	<!-- TASK 6 -->
 	<target name="diff">
 		<exec executable="git" outputproperty="git_diff_result"> 
